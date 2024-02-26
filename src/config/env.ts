@@ -10,4 +10,8 @@ export const env = {
     fromAddress: process.env.MAIL_FROM_ADDRESS || "",
     fromName: process.env.MAIL_FROM_NAME || "",
   },
+  redis: {
+    host: process.env.REDIS_HOST || "redis",
+    port: Number(process.env.REDIS_PORT) || 6379,
+  },
 };

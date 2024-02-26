@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "bull": "^4.12.2",
+    "bullmq": "^5.3.3",
     "express": "^4.18.2",
     "nodemailer": "^6.9.10"
   }
