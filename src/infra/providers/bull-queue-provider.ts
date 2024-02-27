@@ -17,13 +17,14 @@ export class BullQueueProvider implements QueueProvider {
       defaultJobOptions: {
         removeOnComplete: true,
         attempts: 2,
-        delay: 4000,
       },
     });
   }
 
   public async addJob<JobDataType>(jobData: JobDataType) {
-    await this.queue.add("message", jobData);
+    await this.queue.add("message", jobData, {
+      delay: 3000, // 3 seconds to add job to queue
+    });
   }
 
   public process<ProcessDataType>(processFunction: Processor<ProcessDataType>) {
@@ -32,11 +33,20 @@ export class BullQueueProvider implements QueueProvider {
         host: env.redis.host,
         port: env.redis.port,
       },
-      concurrency: 100,
       limiter: {
-        max: 400,
-        duration: 1000,
+        // 1 job per 2 minutes will be processed
+        max: 1,
+        duration: 2000,
       },
-    });
+    })
+      .on("completed", (job) => {
+        console.log(`[${this.queueName}]-[${job.id}]-completed`);
+      })
+      .on("active", (job) => {
+        console.log(`[${this.queueName}]-[${job.id}]-active`);
+      })
+      .on("failed", (job) => {
+        console.log(`[${this.queueName}]-failed`);
+      });
   }
 }
