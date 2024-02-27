@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:queue": "tsx watch --env-file=.env ./src/infra/queue/worker.ts",
-    "dev": "tsx watch --env-file=.env ./src/infra/http/server.ts",
+    "dev": "pm2 start ecosystem.dev.config.js && pm2 monit",
     "build": "tsc",
-    "start": "pm2 start ecosystem.config.js"
+    "start": "pm2 start ecosystem.config.js && pm2 monit"
   },
   "keywords": [],
   "author": "",

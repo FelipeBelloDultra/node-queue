@@ -11,6 +11,6 @@ RUN npm run build
 FROM base AS production
 COPY --from=builder /home/node/app/dist ./dist
 ENV NODE_ENV=production
-COPY ./package*.json .
+COPY ./package*.json ./ecosystem.config.js ./
 RUN npm ci
 CMD [ "npm", "run", "start" ]

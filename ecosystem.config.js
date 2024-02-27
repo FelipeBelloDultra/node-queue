@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "Queue",
-      script: "node ./dist/infra/http/worker.js",
+      script: "node ./dist/infra/queue/worker.js",
     },
     {
       name: "API",
